@@ -18,6 +18,16 @@ The entire experience is orchestrated using a modern, scalable stack deeply inte
 - **Firebase & Firestore**: The real-time database backbone. It instantly synchronizes the game state (countdown timers, video URLs, generated text, and status flags) across the Host Panel, the Main Show Screen, and all the individual Player mobile screens.
 - **Next.js (React)**: The responsive, interactive frontend handling the cinematic UI, synchronized teleprompter text, and real-time audio playback.
 
+## Project structure
+
+- **main.py**: Entry point to the FastAPI application, that calls the imported functions from the other modules for text, audio and video generation, as well as updating the database and storage buckets
+- **gemini_utils.py**: Manages the logic behind the authentication and API calls to Gemini for prompt and video judging, and contains the prompts and system instructions for the text generation
+- **veo_utils.py**: Manages the logic behind the authentication and API calls to Veo for video generation.
+- **tts_utils.py**: Manages the logic behind the authentication and API calls to Gemini TTS for audio generation and contains output style instructions for TTS.
+- **tts_lang_manager.py**: Contains different deterministic messages in different languages for each stage of the competition (such as the Welcome) which are imported by tts_utils.py and tweaked with string formatting for player names and video theme chosen.
+- **firestore_utils.py**: Manages all logic regarding creating game rounds, updating game rounds and player details with text outputs from Gemini, and Cloud Storage file paths to generated audio and video and managing game state.
+- **gcs_utils.py**: Manages the logic for uploading video and audio to Cloud Storage.
+
 ## Enterprise Use Cases 
 
 While this application is a gamified experience, the underlying capabilities—automating video generation, analyzing multimodal inputs, and orchestrating complex generative workflows—are highly relevant to enterprise use cases:
