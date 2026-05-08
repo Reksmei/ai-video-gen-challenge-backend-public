@@ -36,7 +36,7 @@ Marketing teams can use LLMs to simulate user profiles and test campaign assets 
 
 ## How to Test Locally
 
-To run the full stack locally, you will need two terminal windows—one for the FastAPI backend and one for the Next.js frontend.
+To run the backend locally, you will need two terminal windows—one for the FastAPI backend and one for the Next.js frontend.
 
 ### Prerequisites
 - Python 3.9+
@@ -45,10 +45,10 @@ To run the full stack locally, you will need two terminal windows—one for the 
 - Firebase Project configured
 - A `.env` file in the Backend and a `.env.local` file in the Frontend with your GCP/Firebase credentials.
 
-### Backend Setup
-1. Navigate to the backend directory:
+### Clone and Setup
+1. Open your terminal and change the directory to when you want to clone the repo, then clone this repo
    ```bash
-   cd Backend
+   gh repo clone https://github.com/Reksmei/ai-video-gen-challenge-backend-public
    ```
 2. Create and activate a virtual environment (optional but recommended):
    ```bash
@@ -57,6 +57,7 @@ To run the full stack locally, you will need two terminal windows—one for the 
    ```
 3. Install dependencies:
    ```bash
+   cd 
    pip install -r requirements.txt
    ```
 4. Run the FastAPI server:
@@ -64,25 +65,3 @@ To run the full stack locally, you will need two terminal windows—one for the 
    uvicorn main:app --reload
    ```
    *The backend will run on `http://localhost:8000`*
-
-### Frontend Setup
-1. Open a new terminal and navigate to the frontend directory:
-   ```bash
-   cd Frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the Next.js development server:
-   ```bash
-   npm run dev
-   ```
-   *The frontend will run on `http://localhost:3000`*
-
-### Playing the Game
-1. Navigate to `http://localhost:3000/YOUR_EVENT_ID/admin` or `http://localhost:3000/YOUR_EVENT_ID/main` to access the dashboards.
-2. Open the **Host Panel** to create a game round.
-3. Open the **Main Show Screen** in a large window.
-4. Open the **Player Screens** (e.g., `/YOUR_EVENT_ID/player/p1`) to submit prompts.
-5. Use the Host Panel to progress the game state and watch the Show Screen synchronize automatically!
