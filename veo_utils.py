@@ -1,6 +1,7 @@
 from google import genai
 from google.genai import types
-from google.genai.types import GenerateVideosConfig, Image
+from google.genai.types import GenerateVideosConfig
+from google.genai.types import Image as GenaiImage
 import gcs_utils
 import time
 from typing import Optional, List, Union
@@ -12,16 +13,30 @@ import asyncio
 
 load_dotenv()
 
-client = genai.AsyncClient(vertexai=True, project=os.getenv("PROJECT_ID"), location="us-central1")
+# Configure retry options if Veo fails
+retry_options = types.HttpRetryOptions(
+    initial_delay=5.0, 
+    attempts=3, 
+    exp_base=1,
+    http_status_codes=[429, 500, 502, 503, 504], 
+    )
+
+http_options = types.HttpOptions(
+    retry_options=retry_options,
+    )
+    
+client = genai.AsyncClient(
+    vertexai=True, project=os.getenv("PROJECT_ID"),
+     location="us-central1",
+     http_options=http_options)
 video_bucket=os.getenv("VIDEO_BUCKET")
 
 async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, reference_images: Optional[Union[List[str], str]]):
+
     try:
-        from google.genai.types import Image as GenaiImage
-        
         image_obj = None
         img_path = None
-
+   
         if reference_images:
             if isinstance(reference_images, str):
                 img_path = reference_images
@@ -68,7 +83,7 @@ async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, 
         model_name = 'veo-3.1-fast-generate-001'
         print(f"Triggering Veo generation for {player_num} with model {model_name}. Image: {bool(image_obj)}")
         
-        await operation = client.models.generate_videos(
+        operation = await client.models.generate_videos(
             model=model_name,
             prompt=prompt,
             config=types.GenerateVideosConfig(**config_args)
@@ -77,7 +92,7 @@ async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, 
         while not operation.done:
             print(f"Waiting for video generation ({player_num})...")
             await asyncio.sleep(15)
-            operation = client.operations.get(operation)
+            operation = await client.operations.get(operation.name)
 
         if operation.error:
             print(f"Operation error for {player_num}: {operation.error}")
@@ -90,8 +105,8 @@ async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, 
             if video_data is None:
                 raise Exception("Operation succeeded but video_bytes is None. Check if output_gcs_uri was inadvertently set or if the model changed behavior.")
 
-            video_url = gcs_utils.upload_video_to_gcs(video_data, content_type="video/mp4")
-            time.sleep(5)
+            video_url = await asyncio.to_thread(gcs_utils.upload_video_to_gcs, video_data, content_type="video/mp4")
+            await asyncio.sleep(5)
 
             filename = video_url.split('/')[-1]
             gs_uri_stored = f"gs://{video_bucket}/{filename}"
@@ -101,13 +116,13 @@ async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, 
                 f"{player_num}Video": gs_uri_stored,
                 f"{player_num}Prompt": prompt,
             }
-            game_ref.update(update_data)
+            await asyncio.to_thread(game_ref.update, update_data)
             print(f"Successfully saved {player_num} video to Firestore.")
 
             return {
                 "status": "success",
                 "video_url" : video_url,
-                "qr_code_base64": gcs_utils.generate_qr_base64(video_url)
+                "qr_code_base64": await asyncio.to_thread(gcs_utils.generate_qr_base64, video_url)
             }
         else:
             raise Exception("No video generated in the response")
