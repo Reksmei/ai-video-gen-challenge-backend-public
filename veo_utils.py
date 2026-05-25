@@ -8,13 +8,14 @@ from fastapi import HTTPException
 from firestore_utils import db
 import os
 from dotenv import load_dotenv
+import asyncio
 
 load_dotenv()
 
-client = genai.Client(vertexai=True, project=os.getenv("PROJECT_ID"), location="us-central1")
+client = genai.AsyncClient(vertexai=True, project=os.getenv("PROJECT_ID"), location="us-central1")
 video_bucket=os.getenv("VIDEO_BUCKET")
 
-def generate_and_upload_video(game_id: str, player_num: str, prompt: str, reference_images: Optional[Union[List[str], str]]):
+async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, reference_images: Optional[Union[List[str], str]]):
     try:
         from google.genai.types import Image as GenaiImage
         
@@ -67,7 +68,7 @@ def generate_and_upload_video(game_id: str, player_num: str, prompt: str, refere
         model_name = 'veo-3.1-fast-generate-001'
         print(f"Triggering Veo generation for {player_num} with model {model_name}. Image: {bool(image_obj)}")
         
-        operation = client.models.generate_videos(
+        await operation = client.models.generate_videos(
             model=model_name,
             prompt=prompt,
             config=types.GenerateVideosConfig(**config_args)
@@ -75,7 +76,7 @@ def generate_and_upload_video(game_id: str, player_num: str, prompt: str, refere
 
         while not operation.done:
             print(f"Waiting for video generation ({player_num})...")
-            time.sleep(15)
+            await asyncio.sleep(15)
             operation = client.operations.get(operation)
 
         if operation.error:
