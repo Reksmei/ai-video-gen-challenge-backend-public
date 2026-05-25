@@ -14,6 +14,7 @@ import veo_utils
 import tts_utils
 import uvicorn
 import logging
+import asyncio
 
 class PollingEndpointFilter(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
@@ -105,7 +106,7 @@ from typing import Optional, List, Union
 # ... (inside app definition)
 
 @app.post("/video_generator")
-def video_generation(game_id: str = Form(...), player_num: str = Form(...), prompt: str = Form(...), reference_images: Optional[Union[List[str], str]] = Form(None)):
+async def video_generation(game_id: str = Form(...), player_num: str = Form(...), prompt: str = Form(...), reference_images: Optional[Union[List[str], str]] = Form(None)):
     return veo_utils.generate_and_upload_video(game_id=game_id, player_num=player_num, prompt=prompt, reference_images=reference_images)
 
 @app.post("/post_video_gen_audio")
