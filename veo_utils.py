@@ -32,7 +32,6 @@ client = genai.AsyncClient(
 video_bucket=os.getenv("VIDEO_BUCKET")
 
 async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, reference_images: Optional[Union[List[str], str]]):
-
     try:
         image_obj = None
         img_path = None
