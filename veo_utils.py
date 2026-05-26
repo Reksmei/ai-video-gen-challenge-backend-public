@@ -25,10 +25,10 @@ http_options = types.HttpOptions(
     retry_options=retry_options,
     )
     
-client = genai.AsyncClient(
+aclient = genai.Client(
     vertexai=True, project=os.getenv("PROJECT_ID"),
      location="us-central1",
-     http_options=http_options)
+     http_options=http_options).aio
 video_bucket=os.getenv("VIDEO_BUCKET")
 
 async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, reference_images: Optional[Union[List[str], str]]):
@@ -82,7 +82,7 @@ async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, 
         model_name = 'veo-3.1-fast-generate-001'
         print(f"Triggering Veo generation for {player_num} with model {model_name}. Image: {bool(image_obj)}")
         
-        operation = await client.models.generate_videos(
+        operation = await aclient.models.generate_videos(
             model=model_name,
             prompt=prompt,
             config=types.GenerateVideosConfig(**config_args)
