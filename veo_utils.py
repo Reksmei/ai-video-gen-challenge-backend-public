@@ -28,7 +28,9 @@ http_options = types.HttpOptions(
 aclient = genai.Client(
     vertexai=True, project=os.getenv("PROJECT_ID"),
      location="us-central1",
-     http_options=http_options).aio
+     http_options=http_options
+).aio
+
 video_bucket=os.getenv("VIDEO_BUCKET")
 
 async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, reference_images: Optional[Union[List[str], str]]):
