@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Create client for Gen AI SDK
-client = genai.Client(vertexai=True, project=os.getenv("PROJECT_ID"), location="global")
+client = genai.Client(enterprise=True, project=os.getenv("PROJECT_ID"), location="global")
 
 tools_map = {
     "player_score": player_score
