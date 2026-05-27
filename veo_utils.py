@@ -26,7 +26,7 @@ http_options = types.HttpOptions(
     )
     
 aclient = genai.Client(
-    vertexai=True, project=os.getenv("PROJECT_ID"),
+    enterprise=True, project=os.getenv("PROJECT_ID"),
      location="us-central1",
      http_options=http_options
 ).aio
@@ -93,7 +93,7 @@ async def generate_and_upload_video(game_id: str, player_num: str, prompt: str, 
         while not operation.done:
             print(f"Waiting for video generation ({player_num})...")
             await asyncio.sleep(15)
-            operation = await client.operations.get(operation.name)
+            operation = await client.operations.get(operation)
 
         if operation.error:
             print(f"Operation error for {player_num}: {operation.error}")
