@@ -1,59 +1,59 @@
 english_welcome_text1 = """
 Welcome {player1} and {player2} to the AI Video Generator challenge!
 
-You will have 30 seconds to generate the best {video_theme} using Veo 3.1 Fast. 
+You will have 60 seconds to generate the best {video_theme} using Veo 3.1 Fast. 
 
 It's time to put your cinematographic and prompt engineering skills to the ultimate test, and you'll have a reference image you can use if you wish. 
 
 Once time is up, I'll pass my judgment on your videos and choose a winner. 
 
-You have 30 seconds starting... Now!
+You have 60 seconds starting... Now!
 """
 
 english_welcome_text2 = """
 Welcome {player1}, {player2} and {player3} to the AI video generator challenge!
 
-You will have 30 seconds to generate the best {video_theme} using Veo 3.1 Fast. 
+You will have 60 seconds to generate the best {video_theme} using Veo 3.1 Fast. 
 
 It's time to put your cinematographic and prompt engineering skills to the ultimate test, and you'll have a reference image you can use if you wish. 
 
 Once time is up, I'll pass my judgment on your videos and choose a winner. 
 
-You have 30 seconds starting... Now!
+You have 60 seconds starting... Now!
 """
 
 polish_welcome_text1 = """
-Witamy {player1} i {player2} w wyzwaniu Generatora Wideo AI. Macie 30 sekund na wygenerowanie najlepszego {video_theme} przy użyciu Veo 3.1 Fast. \
+Witamy {player1} i {player2} w wyzwaniu Generatora Wideo AI. Macie 60 sekund na wygenerowanie najlepszego {video_theme} przy użyciu Veo 3.1 Fast. \
 Nadszedł czas, aby wystawić wasze umiejętności kinematograficzne i inżynierię promptów na ostateczną próbę. \
 Będziecie mieli do dyspozycji obraz referencyjny, którego możecie użyć, jeśli chcecie. \
 Kiedy czas minie, ocenię wasze filmy i wybiorę zwycięzcę. 
-Macie 30 sekund, zaczynamy... Teraz!
+Macie 60 sekund, zaczynamy... Teraz!
 """
 
 polish_welcome_text2 = """
-Witamy {player1}, {player2} i {player3} w wyzwaniu Generatora Wideo AI. Macie 30 sekund na wygenerowanie najlepszego {video_theme} przy użyciu Veo 3.1 Fast. \
+Witamy {player1}, {player2} i {player3} w wyzwaniu Generatora Wideo AI. Macie 60 sekund na wygenerowanie najlepszego {video_theme} przy użyciu Veo 3.1 Fast. \
 Nadszedł czas, aby wystawić wasze umiejętności kinematograficzne i inżynierię promptów na ostateczną próbę. \
 Będziecie mieli do dyspozycji obraz referencyjny, którego możecie użyć, jeśli chcecie. \
 Kiedy czas minie, ocenię wasze filmy i wybiorę zwycięzcę. 
-Macie 30 sekund, zaczynamy... Teraz!
+Macie 60 sekund, zaczynamy... Teraz!
 """
 
 spanish_welcome_text1 = """
 Bienvenidos {player1} y {player2} al desafío del Generador de Video con IA. 
 
-Tendrán 30 segundos para generar el mejor {video_theme} usando Veo 3.1 Fast. 
+Tendrán 60 segundos para generar el mejor {video_theme} usando Veo 3.1 Fast. 
 
 Es hora de poner a prueba al máximo sus habilidades cinematográficas y de ingeniería de prompts, y tendrán una imagen de referencia que pueden usar si lo desean. 
 
 Una vez que se acabe el tiempo, evaluaré sus videos y elegiré a un ganador. 
 
-Tienen 30 segundos a partir de... ¡Ya!
+Tienen 60 segundos a partir de... ¡Ya!
 """
 
 spanish_welcome_text2 = """
 Bienvenidos {player1}, {player2} y {player3} al desafío del Generador de Video con IA. 
 
-Tendrán 30 segundos para generar el mejor {video_theme} usando Veo 3.1 Fast. 
+Tendrán 60 segundos para generar el mejor {video_theme} usando Veo 3.1 Fast. 
 
 Es hora de poner a prueba al máximo sus habilidades cinematográficas y de ingeniería de prompts, y tendrán una imagen de referencia que pueden usar si lo desean. 
 
@@ -65,7 +65,7 @@ Tienen 30 segundos a partir de... ¡Ya!
 german_welcome_text1 = """
 Willkommen {player1} und {player2} zur AI Video Generator Challenge. 
 
-Ihr habt 30 Sekunden Zeit, um mit Veo 3.1 Fast das beste {video_theme} zu erstellen. 
+Ihr habt 60 Sekunden Zeit, um mit Veo 3.1 Fast das beste {video_theme} zu erstellen. 
 
 Es ist an der Zeit, eure filmischen Fähigkeiten und euer Prompt Engineering auf die ultimative Probe zu stellen. 
 
@@ -73,13 +73,13 @@ Euch steht ein Referenzbild zur Verfügung, das ihr nach Belieben nutzen könnt.
 
 Sobald die Zeit abgelaufen ist, werde ich eure Videos bewerten und einen Gewinner wählen. 
 
-Eure 30 Sekunden laufen... ab JETZT!
+Eure 60 Sekunden laufen... ab JETZT!
 """
 
 german_welcome_text2 = """
 Willkommen {player1}, {player2} und {player3} zur AI Video Generator Challenge. 
 
-Ihr habt 30 Sekunden Zeit, um mit Veo 3.1 Fast das beste {video_theme} zu erstellen.
+Ihr habt 60 Sekunden Zeit, um mit Veo 3.1 Fast das beste {video_theme} zu erstellen.
 
 Es ist an der Zeit, eure filmischen Fähigkeiten und euer Prompt Engineering auf die ultimative Probe zu stellen. 
 
@@ -87,21 +87,21 @@ Euch steht ein Referenzbild zur Verfügung, das ihr nach Belieben nutzen könnt.
 
 Sobald die Zeit abgelaufen ist, werde ich eure Videos bewerten und einen Gewinner wählen. 
 
-Eure 30 Sekunden laufen... ab JETZT!
+Eure 60 Sekunden laufen... ab JETZT!
 """
 
 arabic_welcome_1 = """
 أهلاً بكما {player1} و{player2} في تحدي مولد فيديوهات الذكاء الاصطناعي.
 
-سيكون لديكما 30 ثانية لإنشاء أفضل فيديو باستخدام Veo 3.1 Fast. {video_theme}ستقوم بإنشاء.
+سيكون لديكما 60 ثانية لإنشاء أفضل فيديو باستخدام Veo 3.1 Fast. {video_theme}ستقوم بإنشاء.
 
-حان الوقت لوضع مهاراتكما في الإخراج السينمائي وهندسة الأوامر تحت الاختبار النهائي، وسيكون لديكما صورة مرجعية يمكنكما استخدامها إذا أردتما. بمجرد انتهاء الوقت، سأقوم بتقييم فيديوهاتكما واختيار الفائز. أمامكما 30 ثانية تبدأ... الآن!
+حان الوقت لوضع مهاراتكما في الإخراج السينمائي وهندسة الأوامر تحت الاختبار النهائي، وسيكون لديكما صورة مرجعية يمكنكما استخدامها إذا أردتما. بمجرد انتهاء الوقت، سأقوم بتقييم فيديوهاتكما واختيار الفائز. أمامكما 60 ثانية تبدأ... الآن!
 """
 
 arabic_welcome_2 = """
 أهلاً بكم {player1} و{player2} و{player3} في تحدي "مُولد فيديوهات الذكاء الاصطناعي". 
 
-سيكون لديكم 30 ثانية لإنتاج أفضل فيديو باستخدام Veo 3.1 Fast. {video_theme}ستقوم بإنشاء.
+سيكون لديكم 60 ثانية لإنتاج أفضل فيديو باستخدام Veo 3.1 Fast. {video_theme}ستقوم بإنشاء.
 
 حان الوقت لوضع مهاراتكم السينمائية ومهارات هندسة الأوامر تحت الاختبار الحقيقي، 
 
@@ -109,7 +109,7 @@ arabic_welcome_2 = """
 
 بمجرد انتهاء الوقت، سأقوم بتقييم فيديوهاتكم واختيار الفائز. 
 
-أمامكم 30 ثانية تبدأ... الآن!
+أمامكم 60 ثانية تبدأ... الآن!
 """
 
 english_post_video_text = """
