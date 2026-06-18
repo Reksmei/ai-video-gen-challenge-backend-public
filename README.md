@@ -3,7 +3,7 @@
 
 ## Overview
 
-The AI Video Gen Challenge is an interactive, real-time web application that allows users to compete in AI-powered short film making competitions. Hosted live, the application allows a Game Host to set a creative theme and spin up a lobby. Players join via their mobile devices, craft a creative prompt, and submit it before a 30-second countdown ends. 
+The AI Video Gen Challenge is an interactive, real-time web application that allows users to compete in AI-powered short film making competitions. Hosted live, the application allows a Game Host to set a creative theme and spin up a lobby. Players join via their mobile devices, craft a creative prompt, and submit it before a 60-second countdown ends. 
 
 Once time is up, the application seamlessly coordinates multiple AI models to generate the videos, synthesize audio commentary, analyze the user's prompting skills, and finally, judge the resulting videos to crown a winner. 
 
