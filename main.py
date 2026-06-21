@@ -16,26 +16,36 @@ import uvicorn
 import logging
 import asyncio
 
-class PollingEndpointFilter(logging.Filter):
+class AccessLogFilter(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
-        # Uvicorn access log args are typically: (client_addr, method, path, http_version, status_code)
+        # Uvicorn access log args: (client_addr, method, path, http_version, status_code)
         if record.args and len(record.args) >= 5:
-            path = record.args[2]
             status_code = record.args[4]
-            if isinstance(path, str) and ("get_event" in path or "get_game" in path):
-                return status_code >= 400  # Only log if it's an error (400+)
+            path = record.args[2]
+            
+            is_prod = os.getenv("ENVIRONMENT", "").lower() == "production"
+            
+            # In production, only log errors (400+) to reduce noise/cost
+            if is_prod:
+                return status_code >= 400
+                
+            # In non-prod, still filter out high-frequency polling endpoints
+            if isinstance(path, str) and any(x in path for x in ["get_event", "get_game", "get_leaderboard"]):
+                return status_code >= 400
         return True
 
-logging.getLogger("uvicorn.access").addFilter(PollingEndpointFilter())
+logging.getLogger("uvicorn.access").addFilter(AccessLogFilter())
 
 load_dotenv()
 
 if not firebase_admin._apps:
     try:
+        # On Cloud Run, this will use the default service account automatically
         firebase_admin.initialize_app()
-    except Exception:
-        cred = credentials.ApplicationDefault()
-        firebase_admin.initialize_app(cred)
+        print("Firebase initialized successfully")
+    except Exception as e:
+        print(f"Error initializing Firebase: {e}")
+        # We don't want to crash here if possible, but let's log it clearly
 
 app = FastAPI()
 
@@ -51,14 +61,6 @@ app.add_middleware(
 def main_create_event(eventName: str = Form(...), eventId: str = Form(...), password: str = Form(...)):
     return firestore_utils.create_event(eventName=eventName, eventId=eventId, password=password)
 
-@app.get("/get_events")
-def main_get_events():
-    return firestore_utils.get_events()
-
-@app.get("/get_leaderboard")
-def main_get_leaderboard(eventId: str):
-    return firestore_utils.get_leaderboard(eventId)
-
 @app.post("/create_game")
 def main_create_game(eventId: str = Form(...), video_theme: str = Form(...), player1: str = Form(...), player2: str = Form(...), player3: Optional[str] = Form(None), language: str = Form("English")):
     return firestore_utils.create_game(eventId=eventId, video_theme=video_theme, player1=player1, player2=player2, player3=player3, language=language)
@@ -67,21 +69,9 @@ def main_create_game(eventId: str = Form(...), video_theme: str = Form(...), pla
 def main_update_game_status(status: str = Form(...), game_id: str = Form(...)):
     return firestore_utils.update_game_status(status=status, game_id=game_id)
 
-@app.get("/get_game_status")
-def main_get_game_status(game_id: str):
-    return(firestore_utils.get_game_status)
-
-@app.get("/get_event")
-def main_get_event(eventId: str):
-    return firestore_utils.get_event(eventId)
-
 @app.post("/set_active_game")
 def main_set_active_game(eventId: str = Form(...), game_id: str = Form(...)):
     return firestore_utils.set_active_game(eventId, game_id)
-
-@app.get("/get_game_rounds")
-def main_get_game_rounds(eventId: str):
-    return firestore_utils.get_game_rounds(eventId)
 
 @app.get("/get_game_round")
 def main_get_game_round(game_id: str):
@@ -107,7 +97,7 @@ from typing import Optional, List, Union
 
 @app.post("/video_generator")
 async def video_generation(game_id: str = Form(...), player_num: str = Form(...), prompt: str = Form(...), reference_images: Optional[Union[List[str], str]] = Form(None)):
-    return veo_utils.generate_and_upload_video(game_id=game_id, player_num=player_num, prompt=prompt, reference_images=reference_images)
+    return await veo_utils.generate_and_upload_video(game_id=game_id, player_num=player_num, prompt=prompt, reference_images=reference_images)
 
 @app.post("/post_video_gen_audio")
 def main_synthesize_post_video_gen_audio(game_id: str = Form(...), lang: str = Form(...)):
@@ -126,5 +116,5 @@ def video_judger(game_id: str = Form(...), player3: bool = Form(...)):
     return gemini_utils.judge_videos(game_id=game_id, player3=player3)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
+    port = int(os.getenv("PORT", 8080))
+    uvicorn.run(app, host="0.0.0.0", port=port)
