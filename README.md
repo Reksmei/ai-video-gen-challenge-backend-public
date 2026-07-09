@@ -18,6 +18,8 @@ The entire experience is orchestrated using a modern, scalable stack deeply inte
 - **Firebase & Firestore**: The real-time database backbone. It instantly synchronizes the game state (countdown timers, video URLs, generated text, and status flags) across the Host Panel, the Main Show Screen, and all the individual Player mobile screens.
 - **Next.js (React)**: The responsive, interactive frontend handling the cinematic UI, synchronized teleprompter text, and real-time audio playback.
 
+![architecture](https://storage.googleapis.com/ai-pg-demo-media/ai_video_gen_challenge_solution_architecture.png)
+
 ## Project structure
 
 - **main.py**: Entry point to the FastAPI application, that calls the imported functions from the other modules for text, audio and video generation, as well as updating the database and storage buckets
