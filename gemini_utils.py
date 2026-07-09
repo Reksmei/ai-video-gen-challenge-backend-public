@@ -152,7 +152,7 @@ def judge_videos(game_id: str, player3: bool):
     In {lang}, create some suspense and then analyze each of the videos, 
     providing a sentence highlighting the key features from each video. 
     
-    Evaluate which participant's video is the best based on Consistency, Fluidity, and Detail.
+    Evaluate which participant's video is the best based on Consistency, Fluidity, Detail and adherence to the theme.
     
     Announce the winner with "and the winner is" or the equivalent in {lang}!
     You should provide 2-3 sentences detailing why the winner's video was the best and how the other participants could improve their videos.
