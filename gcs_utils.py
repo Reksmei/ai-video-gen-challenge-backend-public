@@ -16,6 +16,7 @@ storage_client = storage.Client(project=os.getenv("PROJECT_ID"))
 
 video_bucket = storage_client.bucket(video_bucket_name)
 audio_bucket = storage_client.bucket(audio_bucket_name)
+image_bucket = storage_client.bucket(image_bucket_name)
 
 def upload_video_to_gcs(video_data: bytes, content_type: str = "video/mp4") -> str:
     '''
@@ -34,6 +35,15 @@ def upload_audio_to_gcs(audio_data: bytes, content_type: str = "audio/mp3") -> s
     blob = audio_bucket.blob(filename)
     blob.upload_from_string(audio_data, content_type=content_type)
     return f"https://storage.googleapis.com/{audio_bucket_name}/{filename}"
+
+def upload_image_to_gcs(image_data: bytes, content_type: str="image/png"):
+    '''
+    Uploads custom reference images to GCS
+    '''
+    filename = f"image-{uuid.uuid4()}.png"
+    blob = image_bucket.blob(filename)
+    blob.upload_from_string(image_data, content_type=content_type)
+    return f"https://storage.googleapis.com/{image_bucket_name}/{filename}"
 
 
 def generate_qr_base64(url: str) -> str:
