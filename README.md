@@ -14,6 +14,7 @@ The entire experience is orchestrated using a modern, scalable stack deeply inte
 - **Veo 3.1 Fast on Agent Platform**: The core video generation engine. It provides the perfect balance of high-end cinematic quality and quicker generation speeds necessary for a live, interactive game.
 - **Gemini 3.1 Flash Lite and Gemini 3.5 Flash on Agent Platform**: Powers the "AI Judge." It utilizes advanced multimodal reasoning to analyze the players' text prompts and visually review the multiple generated short videos in seconds to determine the winner.
 - **Gemini 2.5 TTS on Agent Platform**: Provides the charismatic voice of the AI host/judge, dynamically generating realistic, synthesized speech for the welcome message, prompt analysis, and final judgment.
+- **Nano Banana 2 Lite on Agent Platform**: Leverages low latency image generation within seconds to generate a custom optional reference image to use alongside the text prompts for video generation. 
 - **Cloud Run**: A serverless, scalable containerized FastAPI backend that securely manages the heavy API calls to Agent Platform and orchestrates the game logic.
 - **Firebase & Firestore**: The real-time database backbone. It instantly synchronizes the game state (countdown timers, video URLs, generated text, and status flags) across the Host Panel, the Main Show Screen, and all the individual Player mobile screens.
 - **Next.js (React)**: The responsive, interactive frontend handling the cinematic UI, synchronized teleprompter text, and real-time audio playback.
@@ -23,7 +24,7 @@ The entire experience is orchestrated using a modern, scalable stack deeply inte
 ## Project structure
 
 - **main.py**: Entry point to the FastAPI application, that calls the imported functions from the other modules for text, audio and video generation, as well as updating the database and storage buckets
-- **gemini_utils.py**: Manages the logic behind the authentication and API calls to Gemini for prompt and video judging, and contains the prompts and system instructions for the text generation
+- **gemini_utils.py**: Manages the logic behind the authentication and API calls to Gemini for prompt and video judging, as well as image generation with Nano Banana 2 Lite and contains the prompts and system instructions for the text generation
 - **veo_utils.py**: Manages the logic behind the authentication and API calls to Veo for video generation.
 - **tts_utils.py**: Manages the logic behind the authentication and API calls to Gemini TTS for audio generation and contains output style instructions for TTS.
 - **tts_lang_manager.py**: Contains different deterministic messages in different languages for each stage of the competition (such as the Welcome) which are imported by tts_utils.py and tweaked with string formatting for player names and video theme chosen.
@@ -51,7 +52,7 @@ Marketing teams can use LLMs to simulate user profiles and test campaign assets 
 To run the backend locally, you will need two terminal windows—one for the FastAPI backend and one for the Next.js frontend.
 
 ### Prerequisites
-- Python 3.9+
+- Python 3.10+
 - Node.js 18+
 - Google Cloud Project with Agent Platform enabled
 - Firebase Project configured
