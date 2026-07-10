@@ -16,6 +16,60 @@ tools_map = {
     "player_score": player_score
 }
 
+# Generates an optional reference image to accompany text prompt for video generation
+def generate_ref_image(game_id: str, player_id: str, custom_prompt: str = None):
+    '''
+    Generates custom reference image to use to generate a video
+    '''
+
+    doc_ref = db.collection("game_rounds").document(game_id)
+    doc = doc_ref.get()
+    
+    if not doc.exists:
+        raise HTTPException(status_code=404, detail="Game round not found")
+    
+    game_data = doc.to_dict()
+    video_theme = game_data.get("videoTheme", "modern scene")
+    
+    if custom_prompt and custom_prompt.strip():
+        prompt_text = custom_prompt.strip()
+    else:
+        player_prompt = game_data.get(f"{player_id}Prompt", "")
+        prompt_text = player_prompt
+
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite-image",
+        contents=prompt_text,
+        config=types.GenerateContentConfig(
+            response_modalities=["IMAGE"],
+            image_config=types.ImageConfig(
+                aspect_ratio="4:3"
+            )
+        )
+    )
+
+    generated_bytes = None
+    if response.candidates and response.candidates[0].content.parts:
+        for part in response.candidates[0].content.parts:
+            if part.inline_data:
+                generated_bytes = part.inline_data.data if hasattr(part.inline_data, 'data') else part.inline_data
+    
+    if not generated_bytes:
+        raise HTTPException(status_code=500, detail="Failed to generate image bytes from model response")
+
+    image_url = upload_image_to_gcs(generated_bytes, content_type="image/png")
+    key = f"{player_id}_image"
+    doc_ref.set(
+        {key: image_url},
+        merge=True
+    )
+
+    return {
+        "status": "success",
+        "image_url": image_url
+    }
+
+# Function to request prompt analysis from Gemini
 def judge_prompt(game_id: str, player3: bool):
     doc_ref = db.collection("game_rounds").document(game_id)
     doc = doc_ref.get()
@@ -126,6 +180,7 @@ def gemini_prompt_lecture(game_id: str, lang:str):
         "prompt_lecture_audio": prompt_lecture_audio
     }
 
+# Function to request video judgment from Gemini
 def judge_videos(game_id: str, player3: bool):
     doc_ref = db.collection("game_rounds").document(game_id)
     doc = doc_ref.get()
