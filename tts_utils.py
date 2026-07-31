@@ -95,7 +95,7 @@ def synthesize_welcome_message(game_id:str, lang: str):
     voice = texttospeech.VoiceSelectionParams(
         language_code=language_code,
         name="Alnilam",  
-        model_name="gemini-2.5-flash-tts"
+        model_name="gemini-3.1-flash-tts-preview"
     )
 
     audio_config = texttospeech.AudioConfig(

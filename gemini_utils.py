@@ -26,6 +26,7 @@ load_dotenv()
 # Create client for Gen AI SDK
 client = genai.Client(enterprise=True, project=os.getenv("PROJECT_ID"), location="global")
 
+# Create tool mapping
 tools_map = {
     "player_score": player_score
 }
@@ -33,7 +34,7 @@ tools_map = {
 # Generates an optional reference image to accompany text prompt for video generation
 def generate_ref_image(game_id: str, player_id: str, custom_prompt: str = None):
     '''
-    Generates custom reference image to use to generate a video
+    Generates custom reference image to use to generate a video using Nano Banana 2 Lite
     '''
 
     doc_ref = db.collection("game_rounds").document(game_id)
@@ -127,7 +128,7 @@ def judge_prompt(game_id: str, player3: bool):
     parts.append(types.Part(text=prompt_judge_prompt))
 
     response = client.models.generate_content(
-        model="gemini-3.1-flash-lite",
+        model="gemini-3.5-flash-lite",
         contents=[types.Content(role="user", parts=parts)],
         config=types.GenerateContentConfig(
             temperature=1.2,
@@ -167,7 +168,7 @@ def gemini_prompt_lecture(game_id: str, lang:str):
     Once you're done, mention that you'll analyze their (your) videos shortly and then you'll crown a winner! 
     '''
     response = client.models.generate_content(
-        model="gemini-3.1-flash-lite-preview",
+        model="gemini-3.5-flash-lite",
         contents=[prompt],
         config = types.GenerateContentConfig(
             system_instruction='''
@@ -269,7 +270,7 @@ def judge_videos(game_id: str, player3: bool):
 
     # 1. Initialize the Chat Session
     chat = client.chats.create(
-        model="gemini-3.5-flash",
+        model="gemini-3.6-flash",
         config=types.GenerateContentConfig(
             temperature=0.7,
             system_instruction='''You are a world class cinematic director and AI video generator 
