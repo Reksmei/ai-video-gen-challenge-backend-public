@@ -13,7 +13,7 @@ The entire experience is orchestrated using a modern, scalable stack deeply inte
 
 - **Veo 3.1 Fast on Agent Platform**: The core video generation engine. It provides the perfect balance of high-end cinematic quality and quicker generation speeds necessary for a live, interactive game.
 - **Gemini 3.1 Flash Lite and Gemini 3.5 Flash on Agent Platform**: Powers the "AI Judge." It utilizes advanced multimodal reasoning to analyze the players' text prompts and visually review the multiple generated short videos in seconds to determine the winner.
-- **Gemini 2.5 TTS on Agent Platform**: Provides the charismatic voice of the AI host/judge, dynamically generating realistic, synthesized speech for the welcome message, prompt analysis, and final judgment.
+- **Gemini 3.1 TTS on Agent Platform**: Provides the charismatic voice of the AI host/judge, dynamically generating realistic, synthesized speech for the welcome message, prompt analysis, and final judgment.
 - **Nano Banana 2 Lite on Agent Platform**: Leverages low latency image generation within seconds to generate a custom optional reference image to use alongside the text prompts for video generation. 
 - **Cloud Run**: A serverless, scalable containerized FastAPI backend that securely manages the heavy API calls to Agent Platform and orchestrates the game logic.
 - **Firebase & Firestore**: The real-time database backbone. It instantly synchronizes the game state (countdown timers, video URLs, generated text, and status flags) across the Host Panel, the Main Show Screen, and all the individual Player mobile screens.
