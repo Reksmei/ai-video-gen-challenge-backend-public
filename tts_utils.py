@@ -47,7 +47,7 @@ def synthesize_welcome_message(game_id:str, lang: str):
         player3 = None
         raw_video_theme = doc.get("videoTheme")
     
-    prompt = "Read aloud with a charismatic tone"
+    prompt = "Read aloud with a charismatic but not over the top tone"
     video_theme= raw_video_theme.replace("_", " ")
 
     if lang == "English" and player3 != None:
@@ -150,7 +150,7 @@ def synthesize_post_video_gen_audio(game_id:str, lang: str):
     voice = texttospeech.VoiceSelectionParams(
         language_code=language_code,
         name="Alnilam",  
-        model_name="gemini-2.5-flash-tts"
+        model_name="gemini-3.1-flash-tts-preview"
     )
 
     audio_config = texttospeech.AudioConfig(
@@ -169,7 +169,7 @@ def synthesize_post_video_gen_audio(game_id:str, lang: str):
     return audio_data_uri, text
 
 def video_show_audio(game_id: str, lang: str):
-    prompt = "Read aloud in with a charismatic tone"
+    prompt = "Read aloud in with a charismatic tone but not over the top tone"
     
     doc_ref = db.collection("game_rounds").document(game_id)
     doc = doc_ref.get().to_dict()
@@ -184,7 +184,7 @@ def video_show_audio(game_id: str, lang: str):
         player2 = doc.get("player2", "")      
         player3 = None
     
-    prompt = "Read aloud with a charismatic tone"
+    prompt = "Read aloud with a charismatic but not over the top tone"
 
     if lang == "English" and player3 != None:
         language_code="en-us"
@@ -231,7 +231,7 @@ def video_show_audio(game_id: str, lang: str):
     voice = texttospeech.VoiceSelectionParams(
         language_code=language_code,
         name="Alnilam",  
-        model_name="gemini-2.5-flash-tts"
+        model_name="gemini-3.1-flash-tts-preview"
     )
 
     audio_config = texttospeech.AudioConfig(
@@ -252,7 +252,7 @@ def video_show_audio(game_id: str, lang: str):
         return None
 
 def synthesize_prompt_lecture_audio(gemini_lecture: str, lang: str):
-    prompt = "Read aloud with a charismatic tone"
+    prompt = "Read aloud with a charismatic but not over the top tone"
 
     if lang == "English":
         language_code="en-us"
@@ -274,7 +274,7 @@ def synthesize_prompt_lecture_audio(gemini_lecture: str, lang: str):
     voice = texttospeech.VoiceSelectionParams(
         language_code=language_code,
         name="Alnilam",
-        model_name="gemini-2.5-flash-tts"
+        model_name="gemini-3.1-flash-tts-preview"
     )
 
     audio_config = texttospeech.AudioConfig(
@@ -296,7 +296,7 @@ def synthesize_prompt_lecture_audio(gemini_lecture: str, lang: str):
     
 
 def synthesize_judging_audio(judging_output: str, lang: str):
-    prompt = "Read aloud with a charismatic tone"
+    prompt = "Read aloud with a charismatic but not over the top tone"
     text = judging_output # Note that the judging output will already be in the target language
 
     # Only need set the language code to make sure the voice/accent is appropriate for the language the judging out is in
@@ -320,7 +320,7 @@ def synthesize_judging_audio(judging_output: str, lang: str):
     voice = texttospeech.VoiceSelectionParams(
         language_code=language_code,
         name="Alnilam",  
-        model_name="gemini-2.5-flash-tts"
+        model_name="gemini-3.1-flash-tts-preview"
     )
 
     audio_config = texttospeech.AudioConfig(

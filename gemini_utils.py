@@ -44,7 +44,7 @@ def generate_ref_image(game_id: str, player_id: str, custom_prompt: str = None):
         raise HTTPException(status_code=404, detail="Game round not found")
     
     game_data = doc.to_dict()
-    video_theme = game_data.get("videoTheme", "modern scene")
+    video_theme = game_data.get("videoTheme")
     
     if custom_prompt and custom_prompt.strip():
         prompt_text = custom_prompt.strip()

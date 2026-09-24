@@ -24,7 +24,7 @@ import uuid
 import time
 from dotenv import load_dotenv
 import gemini_utils
-import veo_utils
+import gemini_omni_utils
 import tts_utils
 import uvicorn
 import logging
@@ -110,8 +110,8 @@ from typing import Optional, List, Union
 # ... (inside app definition)
 
 @app.post("/video_generator")
-async def video_generation(game_id: str = Form(...), player_num: str = Form(...), prompt: str = Form(...), reference_images: Optional[Union[List[str], str]] = Form(None)):
-    return await veo_utils.generate_and_upload_video(game_id=game_id, player_num=player_num, prompt=prompt, reference_images=reference_images)
+async def video_generation(game_id: str = Form(...), player_num: str = Form(...)):
+    return await gemini_omni_utils_utils.generate_and_upload_video(game_id=game_id, player_num=player_num)
 
 @app.post("/post_video_gen_audio")
 def main_synthesize_post_video_gen_audio(game_id: str = Form(...), lang: str = Form(...)):
